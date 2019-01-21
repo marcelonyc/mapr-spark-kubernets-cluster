@@ -24,11 +24,8 @@ There are some complexities to the Kubernetes networking that I will not address
 
 
 *   Kubernetes installed and working. 
-    *   If you need to setup a single node kubernetes cluster you can use this documentation for reference https://drive.google.com/open?id=112qqL8re3Wh0d5G8GaxrlIoyWpOWSIHk8vejyBrjHjA. Note you will need a lot of memory and cpu to run in a single node.  
 *   Install a Docker registry that is accessible from all kubernetes nodes.
-    *   [https://drive.google.com/open?id=1MuYk7QNyDcdQiyj4N9DUv6SGuuJGBmyOgO3Nlqv4uCM](https://drive.google.com/open?id=1MuYk7QNyDcdQiyj4N9DUv6SGuuJGBmyOgO3Nlqv4uCM)
 *   Download the artifacts to the Kubernetes master node
-    *   [https://drive.google.com/open?id=18ssYXrRZqtuNY10kO4td7LM6vkp4EZou](https://drive.google.com/open?id=18ssYXrRZqtuNY10kO4td7LM6vkp4EZou)
 *   A running Kubernetes Dashboard and connectivity tested from a browser.
 
 
