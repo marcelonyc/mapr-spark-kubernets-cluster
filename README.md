@@ -1,10 +1,6 @@
 # Deploy standalone Spark cluster on Kubernetes
 
 
-[TOC]
-
-
-
 # Introduction
 
 The artifacts included in this setup will help you deploy a standalone Spark cluster using MapR's packages. Each node on the cluster is configured as a MapR client. There is no data or scripts to go along with the setup (Yet) Once the cluster is up and running  you can get into one of the nodes and run spark-shell or spark-submit with access to maprfs.
