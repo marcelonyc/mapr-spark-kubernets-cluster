@@ -1,0 +1,40 @@
+kind: ReplicationController
+apiVersion: v1
+metadata:
+  name: {{WORKER_POD}}-rc
+  namespace: {{NAMESPACE}}
+spec:
+  replicas: {{NUMBER_OF_WORKERS}}
+  selector:
+    component: {{WORKER_POD}}
+  template:
+    metadata:
+      labels:
+        component: {{WORKER_POD}}
+    spec:
+      containers:
+      - name: {{WORKER_POD}}
+        image: {{DOCKER_IMAGE}}
+        env:
+        - name: MAPR_TICKET
+          value: {{MAPR_TICKET}}
+        - name: MAPR_TICKETFILE_LOCATION
+          value: {{MAPR_TICKETFILE_LOCATION}}
+        - name: MAPR_CLUSTER
+          value: {{MAPR_CLUSTER}}
+        - name: MAPR_CLDB
+          value: {{MAPR_CLDB}}
+        - name: NODE_ROLE
+          value: worker
+        - name: SPARK_MASTER_SERVICE
+          value: {{SPARK_MASTER_SERVICE}}
+        - name: MAPR_SSLTRUSTSTORE
+          value: {{MAPR_SSLTRUSTSTORE}}
+        imagePullPolicy: IfNotPresent
+        command: ["/tmp/mapr_conf.sh"]
+        resources:
+          requests:
+            memory: "{{WORKER_MEMORY}}"
+            cpu: "{{WORKER_CPU}}"
+        ports:
+        - containerPort: 8081

@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "{{NAMESPACE}}"
+  labels:
+    name: "{{NAMESPACE}}"
+---
+kind: ReplicationController
+apiVersion: v1
+metadata:
+  name: {{MASTER_POD}}-rc
+  namespace: {{NAMESPACE}}
+spec:
+  replicas: 1
+  selector:
+    component: {{MASTER_POD}}
+  template:
+    metadata:
+      labels:
+        component: {{MASTER_POD}}
+    spec:
+      containers:
+      - name: {{MASTER_POD}}
+        image: {{DOCKER_IMAGE}}
+        env:
+        - name: MAPR_TICKET
+          value: {{MAPR_TICKET}}
+        - name: MAPR_TICKETFILE_LOCATION
+          value: {{MAPR_TICKETFILE_LOCATION}}
+        - name: MAPR_CLUSTER
+          value: {{MAPR_CLUSTER}}
+        - name: MAPR_CLDB
+          value: {{MAPR_CLDB}} 
+        - name: NODE_ROLE
+          value: master
+        - name: MAPR_SSLTRUSTSTORE
+          value: {{MAPR_SSLTRUSTSTORE}} 
+        imagePullPolicy: IfNotPresent
+        command: ["/tmp/mapr_conf.sh"]
+        resources:
+          requests:
+            memory: "{{MASTER_MEMORY}}"
+            cpu: "{{MASTER_CPU}}"
+        ports:
+        - containerPort: 8080
+        - containerPort: 7077
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{MASTER_POD}}
+  namespace: {{NAMESPACE}}
+spec:
+  selector:
+    component: {{MASTER_POD}}
+  ports:
+  - port: 8580
+    targetPort: 8580
+    name: sparka
+  - port: 8080
+    targetPort: 8080
+    name: sparkc
+  - port: 8980
+    targetPort: 8980
+    name: sparkb
+  - port: 7077
+    targetPort: 7077
+    name: http
